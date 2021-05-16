@@ -59,15 +59,6 @@ public class GetRequest08 extends JsonPlaceHolderBaseUrl {
         assertEquals(expectedDataMap.get("Via"), response.getHeader("Via"));
         assertEquals(expectedDataMap.get("Server"), response.getHeader("Server"));
 
-
-
-
-
-
-
-
-
-
     }
 
 }
