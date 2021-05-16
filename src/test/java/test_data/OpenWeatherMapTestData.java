@@ -1,88 +1,83 @@
 package test_data;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class OpenWeatherMapTestData {
 
-    public int statusCode = 200;
-
     public Map<String, Float> coordSetUp(){
-        Map<String, Float> coord = new HashMap<String, Float>();
+        Map<String, Float> coord = new HashMap<>();
         coord.put("lon", -0.1257f);
         coord.put("lat", 51.5085f);
         return coord;
     }
 
-    Map weather[] = {weatherSetUp()};
-
     public Map<String, Object> weatherSetUp(){
-        Map<String, Object> weather = new HashMap<String, Object>();
-        weather.put("id", 500);
+        Map<String, Object> weather = new HashMap<>();
+        weather.put("id", 501);
         weather.put("main", "Rain");
-        weather.put("description", "light rain");
+        weather.put("description", "moderate rain");
         weather.put("icon", "10d");
         return weather;
     }
+    List<Map> weather = Arrays.asList(weatherSetUp());
 
     public Map<String, Float> mainSetUp(){
-        Map<String, Float> main = new HashMap<String, Float>();
-        main.put("temp", 282.92f);
-        main.put("feels_like", 276.91f);
-        main.put("temp_min", 282.59f);
-        main.put("temp_max", 283.71f);
-        main.put("pressure", 1006f);
+        Map<String, Float> main = new HashMap<>();
+        main.put("temp", 286.2f);
+        main.put("feels_like", 285.18f);
+        main.put("temp_min", 284.82f);
+        main.put("temp_max", 288.15f);
+        main.put("pressure", 998f);
         main.put("humidity", 76f);
         return main;
-
     }
 
     public Map<String, Float> windSetUp(){
-        Map<String, Float> wind = new HashMap<String, Float>();
-        wind.put("speed", 7.2f);
-        wind.put("deg", 200f);
-        wind.put("gust", 12.3f);
+        Map<String, Float> wind = new HashMap<>();
+        wind.put("speed", 5.14f);
+        wind.put("deg", 230f);
         return wind;
     }
 
     public Map<String, Float> rainSetUp(){
-        Map<String, Float> rain = new HashMap<String, Float>();
-        rain.put("1h", 1.06f);
+        Map<String, Float> rain = new HashMap<>();
+        rain.put("1h", 1.42f);
         return rain;
     }
 
     public Map<String, Float> cloudsSetUp(){
-        Map<String, Float> clouds = new HashMap<String, Float>();
-        clouds.put("all", 27f);
-        return clouds;
+        Map<String, Float> cloud = new HashMap<>();
+        cloud.put("all", 75f);
+        return cloud;
     }
 
     public Map<String, Object> sysSetUp(){
-        Map<String, Object> sys = new HashMap<String, Object>();
+        Map<String, Object> sys = new HashMap<>();
         sys.put("type", 1);
         sys.put("id", 1414);
         sys.put("country", "GB");
-        sys.put("sunrise", 1608364978);
-        sys.put("sunset", 1608393157);
+        sys.put("sunrise", 1621138025);
+        sys.put("sunset", 1621194411);
         return sys;
     }
 
     public Map<String, Object> expectedDataSetUp(){
-        Map<String, Object> expectedDataMap = new HashMap<String, Object>();
-        expectedDataMap.put("coord", coordSetUp());
-        expectedDataMap.put("weather", weather);
-        expectedDataMap.put("base", "stations");
-        expectedDataMap.put("main", mainSetUp());
-        expectedDataMap.put("visibility", 8000);
-        expectedDataMap.put("wind", windSetUp());
-        expectedDataMap.put("rain", rainSetUp());
-        expectedDataMap.put("clouds", cloudsSetUp());
-        expectedDataMap.put("dt", 1608396099);
-        expectedDataMap.put("sys", sysSetUp());
-        expectedDataMap.put("timezone", 0);
-        expectedDataMap.put("id", 2643743);
-        expectedDataMap.put("name", "London");
-        expectedDataMap.put("cod", 200);
-        return expectedDataMap;
+        Map<String, Object> expected = new HashMap<>();
+        expected.put("coord", coordSetUp());
+        expected.put("weather", weatherSetUp());
+        expected.put("base", "stations");
+        expected.put("main", mainSetUp());
+        expected.put("visibility", 10000);
+        expected.put("wind", windSetUp());
+        expected.put("rain",rainSetUp());
+        expected.put("clouds", cloudsSetUp());
+        expected.put("dt", 1621173209);
+        expected.put("sys", sysSetUp());
+        expected.put("timezone", 3600);
+        expected.put("id", 2643743);
+        expected.put("name", "London");
+        expected.put("cod", 200);
+        return expected;
     }
+
 }

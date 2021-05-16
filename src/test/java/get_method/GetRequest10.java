@@ -1,15 +1,14 @@
 package get_method;
 
-import base_urls.OpenWeatherMapBaseUrl;
+import base_urls.OpenWeatherBaseUrl;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.Test;
 import test_data.OpenWeatherMapTestData;
-
 import static io.restassured.RestAssured.*;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
-public class GetRequest10 extends OpenWeatherMapBaseUrl {
+public class GetRequest10 extends OpenWeatherBaseUrl {
 
     /*
         When
@@ -63,39 +62,33 @@ public class GetRequest10 extends OpenWeatherMapBaseUrl {
                                         "cod": 200
                                     }
      */
-
     @Test
-    public void get01() {
+    public void get01(){
         //1)Set the URL
-        spec.pathParams("dataPath", "data",
-                "numPath", 2.5,
-                "weatherPath", "weather").
-                queryParams("q", "London",
-                        "appid", "f4ffe3b2ef1fcb3600ab1d7fbc88c2f0");
+        //https://api.openweathermap.org/data/2.5/weather?q=London&appid=f4ffe3b2ef1fcb3600ab1d7fbc88c2f0
+        spec.pathParams("first", "data",
+                        "second", 2.5,
+                        "third", "weather").
+             queryParams("q","London",
+                         "appid","f4ffe3b2ef1fcb3600ab1d7fbc88c2f0");
+
+
         //2)Set the expected data
-        OpenWeatherMapTestData expectedDataObj = new OpenWeatherMapTestData();
+        OpenWeatherMapTestData expectedData = new OpenWeatherMapTestData();
 
         //3)Send the request
-        Response response = given().
-                spec(spec).
-                when().
-                get("/{dataPath}/{numPath}/{weatherPath}");
+        Response response = given().spec(spec).when().get("/{first}/{second}/{third}");
         response.prettyPrint();
 
-        //4)Assert the output
         JsonPath json = response.jsonPath();
 
-        assertEquals(expectedDataObj.statusCode, response.getStatusCode());
-
-        assertEquals((Float)expectedDataObj.coordSetUp().get("lon"),(Float)json.getFloat("coord.lon"));
-        assertEquals((Float)expectedDataObj.coordSetUp().get("lat"),(Float)json.getFloat("coord.lat"));
-
-        assertEquals(expectedDataObj.weatherSetUp().get("id"),json.getInt("weather[0].id"));
-        assertEquals(expectedDataObj.weatherSetUp().get("main"),json.getString("weather[0].main"));
-        assertEquals(expectedDataObj.weatherSetUp().get("description"),json.getString("weather[0].description"));
-        assertEquals(expectedDataObj.weatherSetUp().get("icon"),json.getString("weather[0].icon"));
-
-        assertEquals(expectedDataObj.expectedDataSetUp().get("base"),json.getString("base"));
+        //4)Assert outputs
+        assertEquals(200,response.getStatusCode());
+        assertEquals(expectedData.coordSetUp().get("lat"), (Float)json.getFloat("coord.lat"));
+        assertEquals(expectedData.weatherSetUp().get("main"), json.getString("weather[0].main"));
+        assertEquals(expectedData.expectedDataSetUp().get("base"), json.getString("base"));
+        assertEquals(expectedData.mainSetUp().get("humidity"), (Float)json.getFloat("main.humidity"));
+        assertEquals(expectedData.expectedDataSetUp().get("visibility"), json.getInt("visibility"));
     }
 
 }
