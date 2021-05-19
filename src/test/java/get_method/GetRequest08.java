@@ -2,6 +2,7 @@ package get_method;
 
 import static org.junit.Assert.*;
 import base_urls.JsonPlaceHolderBaseUrl;
+import com.google.gson.Gson;
 import io.restassured.response.Response;
 import org.junit.Test;
 import static io.restassured.RestAssured.*;
@@ -49,8 +50,14 @@ public class GetRequest08 extends JsonPlaceHolderBaseUrl {
         Response response = given().spec(spec).when().get("/{first}/{second}");
         response.prettyPrint();
 
+        //GSON: De-serialization ==> Json Data ----> Java Object
         Map<String, Object> actualDataMap = response.as(HashMap.class);
-        System.out.println(actualDataMap);
+        System.out.println("Java Object from Json: " + actualDataMap);
+
+        //GSON: Serialization ==> Java Object ---> Json Data
+        Gson gson = new Gson();
+        String jsonFromJavaObject = gson.toJson(actualDataMap);
+        System.out.println("Json from Java Object : " + jsonFromJavaObject);
 
         assertEquals(expectedDataMap.get("statusCode"), response.getStatusCode());
         assertEquals(expectedDataMap.get("completed"), actualDataMap.get("completed"));

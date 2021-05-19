@@ -41,7 +41,13 @@ public class PostRequest02 extends JsonPlaceHolderBaseUrl {
         JsonPlaceHolderTestData expectedData = new JsonPlaceHolderTestData();
 
         //3) Send POST Request
-        Response response = given().spec(spec).contentType(ContentType.JSON).body(expectedData.expectedDataSetUp()).when().post("/{first}");
+        Response response = given().
+                                spec(spec).
+                                auth().basic("admin", "1234").
+                                contentType(ContentType.JSON).
+                                body(expectedData.expectedDataSetUp()).
+                            when().
+                                post("/{first}");
         response.prettyPrint();
 
         //4) Assert output
@@ -75,28 +81,7 @@ public class PostRequest02 extends JsonPlaceHolderBaseUrl {
                 body("completed", equalTo(false),
                         "title", equalTo("Tidy your room"),
                         "userId", equalTo(55));
-
-
-
-
-
-
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
 
